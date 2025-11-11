@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learner Data Input</title>
+</head>
+<body>
+    <h1>👨‍🎓 Add New Learner</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul style="list-style: none; padding: 0;">
+        {% for category, message in messages %}
+            <li style="color: {% if category == 'error' %}red{% else %}green{% endif %}; border: 1px solid; padding: 5px; margin-bottom: 5px;">
+                {{ message }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required min="1"><br><br>
+
+        <button type="submit">Insert Learner Data</button>
+    </form>
+
+    <hr>
+
+    <h2>Database Contents (Learner Table)</h2>
+    {% if learners %}
+    <table border="1" style="border-collapse: collapse; width: 50%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for learner in learners %}
+            <tr>
+                <td>{{ learner.id }}</td>
+                <td>{{ learner.name }}</td>
+                <td>{{ learner.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>The 'learner' table is currently empty.</p>
+    {% endif %}
+
+</body>
+</html>
